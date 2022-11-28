@@ -50,6 +50,7 @@ if __name__=="__main__":
     saveGraph:bool=False
     saveDir:str=""
     saveName:str=""
+    absltName:str=""
 
     lnNum:int=IO.ReadInt("Number of lines: ")
 
