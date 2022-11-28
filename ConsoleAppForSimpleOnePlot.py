@@ -1,5 +1,6 @@
 import SimpleOnePlot as simpPlt
 import IOIwrote as IO
+import os
 
 def ReadStr(qstStr:str="", validStr=['y','Y','n','N'])->str:
 
@@ -46,6 +47,9 @@ if __name__=="__main__":
     showLegend:bool=False
     legLocIndex:int=1
     legLoc:list=['best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center']
+    saveGraph:bool=False
+    saveDir:str=""
+    saveName:str=""
 
     lnNum:int=IO.ReadInt("Number of lines: ")
 
@@ -111,5 +115,44 @@ if __name__=="__main__":
             else:
                 valid=True
 
+    saveGraph=YNDecision(decisionStr="Save graph as png? (Y/N)\n")
+    if saveGraph==True:
+
+        dirValid:bool=False
+        nameValid:bool=False
+
+        while dirValid==False:
+
+            saveDir=input("Save at (dir): ")
+
+            try:
+
+                if os.path.isdir(saveDir)==False:
+                    print(f"Directory ({saveDir:^50}) doesn't exists!")
+
+                else:
+                    dirValid=True
+
+            except OSError:
+                print("Invalid input!")
+
+        while nameValid==False:
+
+            saveName=input("Save as (name): ")
+            absltName=saveDir+"/"+saveName+".png"
+
+            try:
+                if os.path.exists(absltName)==True:
+                    print(f"File ({saveName:^20}.png) already exists!")
+
+                    if YNDecision("The file will be replaced if proceed, proceed? (Y/N)\n")==True:
+                        nameValid=True
+
+                else:
+                    nameValid=True
+
+            except OSError:
+                print("Invalid input!")
+
     input("Press any key to continue: ")
-    simpPlt.CreateGraph(lns=graph.lns,xlim_l=xlim_l,xlim_r=xlim_r,ylim_d=ylim_d,ylim_u=ylim_u,xlabel=xlabel,ylabel=ylabel,title=title,withLegend=showLegend,legendLoc=legLoc[legLocIndex])
+    simpPlt.CreateGraph(lns=graph.lns,xlim_l=xlim_l,xlim_r=xlim_r,ylim_d=ylim_d,ylim_u=ylim_u,xlabel=xlabel,ylabel=ylabel,title=title,withLegend=showLegend,legendLoc=legLoc[legLocIndex],saveGrph=saveGraph,absltName=absltName)

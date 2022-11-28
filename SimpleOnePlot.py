@@ -19,7 +19,7 @@ class Lines:
     def AddLine(self,x:list=[],y:list=[],label:str=None,color:str=None,marker:str=None,linestyle:str=None,linewidth:float=None,markersize:float=None):
         self.lns.append(Line(x=x,y=y,label=label,color=color,marker=marker,linestyle=linestyle,linewidth=linewidth,markersize=markersize))
 
-def CreateGraph(lns:list=[],xlim_l:float=None,xlim_r:float=None,ylim_d:float=None,ylim_u:float=None,xlabel:str=None,ylabel:str=None,title:str=None,xticks_ticks:list=None,xticks_labels:list=None,yticks_ticks:list=None,yticks_labels:list=None,withLegend:bool=False,legendLoc:str=None):
+def CreateGraph(lns:list=[],xlim_l:float=None,xlim_r:float=None,ylim_d:float=None,ylim_u:float=None,xlabel:str=None,ylabel:str=None,title:str=None,xticks_ticks:list=None,xticks_labels:list=None,yticks_ticks:list=None,yticks_labels:list=None,withLegend:bool=False,legendLoc:str=None,saveGrph:bool=False,absltName:str=""):
 
     for i in range(len(lns)):
         plt.plot(lns[i].x,lns[i].y,label=lns[i].label,color=lns[i].color,marker=lns[i].marker,linestyle=lns[i].linestyle,linewidth=lns[i].linewidth,markersize=lns[i].markersize)
@@ -34,6 +34,9 @@ def CreateGraph(lns:list=[],xlim_l:float=None,xlim_r:float=None,ylim_d:float=Non
 
     if withLegend==True:
         plt.legend(loc=legendLoc)
+
+    if saveGrph==True:
+        plt.savefig(absltName)
 
     plt.show()
 
