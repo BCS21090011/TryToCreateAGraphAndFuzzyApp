@@ -1,10 +1,9 @@
-import SimpleOnePlot as simpPlt
+from matplotlib import pyplot as plt
 import IOIwrote as IO
 import os
 
-if __name__=="__main__":
 
-    graph=simpPlt.Lines()
+if __name__=="__main__":
 
     xlim_l:float=None
     xlim_r:float=None
@@ -13,10 +12,8 @@ if __name__=="__main__":
     xlabel:str=None
     ylabel:str=None
     title:str=None
-    showLegend:bool=False
     legLocIndex:int=1
     legLoc:list=['best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center']
-    saveGraph:bool=False
     saveDir:str=""
     saveName:str=""
     absltName:str=""
@@ -46,29 +43,33 @@ if __name__=="__main__":
         if IO.YNDecision(decisionStr="With label? (Y/N)\n")==True:
             label=input(f"Label for line {i:>3}: ")
 
-        graph.AddLine(x=x,y=y,label=label)
+        plt.plot(x,y,label=label)
 
         print("\n\n")
 
     if IO.YNDecision(decisionStr="Custom x-axis range? (Y/N)\n")==True:
         xlim_l=IO.ReadFloat(qstStr="x-axis value (lowest): ")
         xlim_r=IO.ReadFloat(qstStr="x-axis value (highest): ")
+        plt.xlim(xlim_l,xlim_r)
 
     if IO.YNDecision(decisionStr="Custom y-axis range? (Y/N)\n")==True:
         ylim_d=IO.ReadFloat(qstStr="y-axis value (lowest): ")
         ylim_u=IO.ReadFloat(qstStr="y-axis value (highest): ")
+        plt.ylim(ylim_d,ylim_u)
 
     if IO.YNDecision(decisionStr="Custom x-axis label? (Y/N)\n")==True:
         xlabel=input("x-axis label: ")
+        plt.xlabel(xlabel=xlabel)
 
     if IO.YNDecision(decisionStr="Custom y-axis label? (Y/N)\n")==True:
         ylabel=input("y-axis label: ")
+        plt.ylabel(ylabel=ylabel)
 
     if IO.YNDecision(decisionStr="Custom title? (Y/N)\n")==True:
         title=input("Title: ")
+        plt.title(label=title)
 
-    showLegend=IO.YNDecision(decisionStr="Show line labels? (Y/N)\n")
-    if showLegend==True:
+    if IO.YNDecision(decisionStr="Show line labels? (Y/N)\n")==True:
 
         valid:bool=False
 
@@ -85,8 +86,9 @@ if __name__=="__main__":
             else:
                 valid=True
 
-    saveGraph=IO.YNDecision(decisionStr="Save graph as png? (Y/N)\n")
-    if saveGraph==True:
+        plt.legend(loc=legLoc[legLocIndex])
+
+    if IO.YNDecision(decisionStr="Save graph as png? (Y/N)\n")==True:
 
         dirValid:bool=False
         nameValid:bool=False
@@ -124,5 +126,7 @@ if __name__=="__main__":
             except OSError:
                 print("Invalid input!")
 
+        plt.savefig(absltName)
+
     input("Press any key to continue: ")
-    simpPlt.CreateGraph(lns=graph.lns,xlim_l=xlim_l,xlim_r=xlim_r,ylim_d=ylim_d,ylim_u=ylim_u,xlabel=xlabel,ylabel=ylabel,title=title,withLegend=showLegend,legendLoc=legLoc[legLocIndex],saveGrph=saveGraph,absltName=absltName)
+    plt.show()
