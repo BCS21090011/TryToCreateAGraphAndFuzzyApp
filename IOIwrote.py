@@ -1,4 +1,4 @@
-def ReadInt(qstStr:str="")->int:
+def ReadInt(qstStr:str="",inMin:int=None,inMax:int=None)->int:
     valid:bool=False
     userInput:int
 
@@ -6,12 +6,24 @@ def ReadInt(qstStr:str="")->int:
         try:
             userInput=int(input(qstStr))
             valid=True
+
+            if inMin!=None:
+                if userInput<inMin:
+                    valid=False
+
+            if inMax!=None:
+                if userInput>inMax:
+                    valid=False
+
         except ValueError:
+            valid=False
+
+        if valid==False:
             print("Invalid input!")
 
     return userInput
 
-def ReadFloat(qstStr:str="")->float:
+def ReadFloat(qstStr:str="",inMin:float=None,inMax:float=None)->float:
     valid:bool=False
     userInput:float
 
@@ -19,7 +31,19 @@ def ReadFloat(qstStr:str="")->float:
         try:
             userInput=float(input(qstStr))
             valid=True
+
+            if inMin!=None:
+                if userInput<inMin:
+                    valid=False
+
+            if inMax!=None:
+                if userInput>inMax:
+                    valid=False
+
         except ValueError:
+            valid=False
+
+        if valid==False:
             print("Invalid input!")
 
     return userInput
